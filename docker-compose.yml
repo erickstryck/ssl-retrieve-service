@@ -9,7 +9,7 @@ services:
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: guest
-      MONGO_INITDB_ROOT_PASSWORD: guest
+      MONGO_INITDB_ROOT_PASSWORD: sample
 
   mongo-express:
     image: mongo-express
