@@ -1,29 +1,22 @@
-//const https = require('https');
 import * as https from 'https';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { RequestDto } from '../dtos/app.request.dto';
 import { ResponseDto } from '../dtos/app.response.dto';
 import { TLSSocket } from 'node:tls';
 
 @Injectable()
 export class AppService {
-  private readonly valid_protocol = 'https:';
+  private certificate: TLSSocket;
 
   async getCertificateInfo(responseDto: RequestDto): Promise<ResponseDto> {
     const urlObj = new URL(responseDto.targetUrl);
-    var options = {
-      hostname: urlObj.hostname,
-      agent: false,
-      rejectUnauthorized: false,
-      ciphers: 'ALL',
-      port: 443,
-      protocol: this.valid_protocol
+    let options = {
+      hostname: urlObj.hostname
     };
 
-    if (urlObj.protocol == this.valid_protocol) {
-      await https.get(options);
-      var certificate = await new Promise(((resolve, reject) => {
-        var req = this.handleRequest(options, true, resolve, reject);
+    try {
+      this.certificate = await new Promise(((resolve, reject) => {
+        let req = this.handleRequest(options, resolve, reject);
 
         req.on('error', (e) => {
           reject(e);
@@ -31,25 +24,45 @@ export class AppService {
 
         req.end();
       }).bind(this));
-      console.log(certificate);
+    } catch (e) {
+      if (e.cert) {
+        return new ResponseDto({
+          subject: e.cert.subject.CN,
+          issuer: e.cert.issuer.CN,
+          isValid: false
+        });
+      } else {
+        return new ResponseDto({
+          subject: responseDto.targetUrl,
+          issuer: "",
+          isValid: false
+        });
+      }
     }
-    return new ResponseDto();
+
+    const response = new ResponseDto({
+      subject: this.certificate['subject'].CN,
+      issuer: this.certificate['issuer'].CN,
+      isValid: this.certificate['authorized']
+    });
+    return response;
   }
 
-  private handleRequest(options, detailed = false, resolve, reject) {
+  private handleRequest(options, resolve, reject) {
     return https.get(options, (res) => {
-      var certificate = ((res.socket) as TLSSocket).getPeerCertificate(detailed);
+      let certificate = ((res.socket) as TLSSocket).getPeerCertificate(true);
 
       if (this.isEmpty(certificate) || certificate === null) {
-        reject({ message: 'The website did not provide a certificate' });
+        reject({ message: 'The website did not provide a certificate or the certificate was expired' });
       } else {
+        certificate['authorized'] = res.socket['authorized'];
         resolve(certificate);
       }
     });
   }
 
   private isEmpty(object): boolean {
-    for (var prop in object) {
+    for (let prop in object) {
       if (object.hasOwnProperty(prop)) return false;
     }
 

@@ -1,3 +1,3 @@
-export class RequestDto{
+export class RequestDto {
     targetUrl: string;
 }
