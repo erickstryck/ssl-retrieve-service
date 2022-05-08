@@ -10,7 +10,7 @@ export class JoiValidationPipe implements PipeTransform {
     if (error) {
       throw new HttpException({
         status: HttpStatus.BAD_REQUEST,
-        error: 'The given url does not have a valid format',
+        error: 'The given url does not have a valid format "http(s)://example.com[...])"',
       }, HttpStatus.BAD_REQUEST);
     }
     return value;

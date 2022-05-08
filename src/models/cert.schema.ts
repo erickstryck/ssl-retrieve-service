@@ -8,7 +8,7 @@ export class Cert {
   @Prop({ required: true })
   subject: string;
 
-  @Prop()
+  @Prop({ required: true })
   issuer: string;
 
   @Prop({ required: true })

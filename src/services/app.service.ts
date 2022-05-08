@@ -37,9 +37,10 @@ export class AppService {
       }).bind(this));
     } catch (e) {
       if (e.cert) {
+        this.certificate = e.cert;
         certificateDto = new CertificateDto({
-          subject: e.cert.subject.CN,
-          issuer: e.cert.issuer.CN,
+          subject: this.certificate['subject'].CN,
+          issuer: this.certificate['issuer'].CN,
           isValid: false
         });
       } else {
@@ -50,6 +51,7 @@ export class AppService {
         });
       }
 
+      certificateDto = this.normalizeCertObj(certificateDto);
       await this.certRepository.create(certificateDto);
       return certificateDto;
     }
@@ -60,8 +62,17 @@ export class AppService {
       isValid: this.certificate['authorized']
     });
 
+    certificateDto = this.normalizeCertObj(certificateDto);
     await this.certRepository.create(certificateDto);
     return certificateDto;
+  }
+
+  private normalizeCertObj(certificateDto: CertificateDto): CertificateDto{
+      return new CertificateDto({
+        subject: certificateDto.subject? certificateDto.subject: 'none',
+        issuer : certificateDto.issuer? certificateDto.issuer: 'none',
+        isValid: certificateDto.isValid
+      });
   }
 
   private handleRequest(options, resolve, reject) {
