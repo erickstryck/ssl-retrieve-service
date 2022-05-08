@@ -15,7 +15,14 @@ export class AppService {
     let certificateDto: CertificateDto;
     const urlObj = new URL(requestDto.targetUrl);
     let options = {
-      hostname: urlObj.hostname
+      hostname: urlObj.hostname,
+      agent: new https.Agent({
+        maxCachedSessions: 0
+      }),
+      method: "GET",
+      port: 443,
+      path: "/",
+      rejectUnauthorized: false
     };
 
     try {
@@ -58,7 +65,7 @@ export class AppService {
   }
 
   private handleRequest(options, resolve, reject) {
-    return https.get(options, (res) => {
+    return https.request(options, (res) => {
       let certificate = ((res.socket) as TLSSocket).getPeerCertificate(true);
 
       if (this.isEmpty(certificate) || certificate === null) {
