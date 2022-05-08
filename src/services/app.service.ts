@@ -1,15 +1,19 @@
 import * as https from 'https';
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { RequestDto } from '../dtos/app.request.dto';
-import { ResponseDto } from '../dtos/app.response.dto';
 import { TLSSocket } from 'node:tls';
+import { Injectable } from '@nestjs/common';
+import { RequestDto } from '../dtos/app.request.dto';
+import { CertificateDto } from '../dtos/app.certificate.dto';
+import { CertRepository } from '../repositories/app.repository';
 
 @Injectable()
 export class AppService {
+  constructor(private certRepository: CertRepository) { }
+
   private certificate: TLSSocket;
 
-  async getCertificateInfo(responseDto: RequestDto): Promise<ResponseDto> {
-    const urlObj = new URL(responseDto.targetUrl);
+  async getCertificateInfo(requestDto: RequestDto): Promise<CertificateDto> {
+    let certificateDto: CertificateDto;
+    const urlObj = new URL(requestDto.targetUrl);
     let options = {
       hostname: urlObj.hostname
     };
@@ -26,26 +30,31 @@ export class AppService {
       }).bind(this));
     } catch (e) {
       if (e.cert) {
-        return new ResponseDto({
+        certificateDto = new CertificateDto({
           subject: e.cert.subject.CN,
           issuer: e.cert.issuer.CN,
           isValid: false
         });
       } else {
-        return new ResponseDto({
-          subject: responseDto.targetUrl,
+        certificateDto = new CertificateDto({
+          subject: requestDto.targetUrl,
           issuer: "",
           isValid: false
         });
       }
+
+      await this.certRepository.create(certificateDto);
+      return certificateDto;
     }
 
-    const response = new ResponseDto({
+    certificateDto = new CertificateDto({
       subject: this.certificate['subject'].CN,
       issuer: this.certificate['issuer'].CN,
       isValid: this.certificate['authorized']
     });
-    return response;
+
+    await this.certRepository.create(certificateDto);
+    return certificateDto;
   }
 
   private handleRequest(options, resolve, reject) {
