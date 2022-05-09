@@ -1,7 +1,6 @@
 import { AppService } from "./app.service";
 import { Cert } from "../models/cert.schema";
 import { Test, TestingModule } from "@nestjs/testing";
-import { RequestDto } from "src/dtos/app.request.dto";
 import { AppController } from "../controllers/app.controller";
 import { ModuleMocker, MockFunctionMetadata } from 'jest-mock';
 import { CertRepository } from "../repositories/app.repository";
@@ -9,15 +8,10 @@ import { CertRepository } from "../repositories/app.repository";
 const moduleMocker = new ModuleMocker(global);
 
 describe('AppService', () => {
-    let requestObj: RequestDto;
     let appService: AppService;
     let certRepository: CertRepository;
 
     beforeEach(async () => {
-        requestObj = {
-            "targetUrl": "https://google.com/"
-        }
-
         const app: TestingModule = await Test.createTestingModule({
             controllers: [AppController],
             providers: [AppService]
