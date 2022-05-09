@@ -22,11 +22,11 @@ Serão instaladas todas as dependências nos containers do [Docker](https://docs
 
 Com os containers sendo executados podemos usar a interface do [Swagger](https://swagger.io/docs/) para realizar as validações dos domínios, os passos a seguir devem ser executados:
 
-1. Acione o Botão `Try it out` para exibir a entrada da requisição
-2. Adicione uma url ao corpo da requisição ex: (`"targetUrl": "https://sample.com"`)
-3. Acione o Botão `Execute` para obter a resposta
+1. Acione o Botão (`Try it out`) para exibir a entrada da requisição
+2. Adicione uma URL ao corpo da requisição ex: (`"targetUrl": "https://sample.com"`)
+3. Acione o Botão (`Execute`) para obter a resposta
 
-Na interface do swagger possuem as informações necessárias para o uso do serviço.
+A interface web do swagger possue as informações necessárias para o uso do serviço.
 
 Caso queira poderá realizar a requisição em ferramentas como [Postman](https://learning.postman.com/docs/getting-started/introduction/).
 
@@ -38,49 +38,23 @@ Os dados são inseridos no banco apenas para relatórios manuais e a API não po
 
 ## Sobre o projeto
 
+O projeto foi desenvolvido com o uso da Framework [NestJs](https://docs.nestjs.com/) utilizando JavaScript com a sintaxe [TypeScript](https://www.typescriptlang.org/docs/), a arquitetura segue os padrões estipulados pela Framework.
 
-## Installation
+## Testando
 
-```bash
-$ npm install
-```
+Para que se possa executar os testes automatizados deve-se acessar o container do serviço web, o procedimento de como acessar o container estão descritos no seguinte documento ([docker exec](https://docs.docker.com/engine/reference/commandline/exec/)).
 
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
+Caso deseje realizar os testes manualmente execute os seguintes comandos dentro do container:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ yarn run test
+$ yarn run test:cov
+$ yarn run test:e2e
 ```
+### Logs
 
-## Support
+Para que se possa visualizar os logs da aplicação é necessário executar comandos do docker conforme a documentação [docker logs](https://docs.docker.com/engine/reference/commandline/logs/).
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Notas
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Este projeto foi desenvolvido para ser apenas um testes de habilidade, o mesmo não deve ser utilizado em ambiente de produção.
