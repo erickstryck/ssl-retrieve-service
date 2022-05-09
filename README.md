@@ -1,30 +1,43 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Este projeto foi desenvolvido para verificação dos certificados SSL de domínios. O serviço consiste em receber uma determinada URL e fazer a leitura do certificado de segurança e realizar uma validação, posteriormente os dados são armazenados em um banco de dados não relacional ([MongoDB](https://www.mongodb.com/docs/)).
+
+## Let's start
+
+O projeto executa a partir de um container docker, para que possa executar é necessário que o docker esteja instalado, para instalar o docker siga as instruções deste [link](https://docs.docker.com/get-docker/).
+
+O projeto conta com três containers, o primeiro é o container do serviço web, o segundo se trata do container do [MongoDB](https://www.mongodb.com/docs/) e o terceiro do [MongoExpress](https://github.com/mongo-express/mongo-express).
+
+Com o docker instalado você deve fazer o download do projeto ou fazer o clone do repositório usando o [GIT](https://git-scm.com/doc), após o download ou o clone do projeto você poderá subir os containers executando o seguinte comando no diretório raiz:
+
+```bash
+$ docker compose up
+```
+Serão instaladas todas as dependências nos containers do [Docker](https://docs.docker.com/get-started/), ao final do processo podemos acessar os serviços pelos seguintes endpoints:
+
+- http://localhost:3000/api/ (Swagger do serviço web)
+- http://localhost:8081/db/test/certs (MongoExpress para visualização dos dados por um painel web)
+
+## Utilizando o serviço
+
+Com os containers sendo executados podemos usar a interface do [Swagger](https://swagger.io/docs/) para realizar as validações dos domínios, os passos a seguir devem ser executados:
+
+1. Acione o Botão `Try it out` para exibir a entrada da requisição
+2. Adicione uma url ao corpo da requisição ex: (`"targetUrl": "https://sample.com"`)
+3. Acione o Botão `Execute` para obter a resposta
+
+Na interface do swagger possuem as informações necessárias para o uso do serviço.
+
+Caso queira poderá realizar a requisição em ferramentas como [Postman](https://learning.postman.com/docs/getting-started/introduction/).
+
+## Visualizando os dados
+
+Com os containers sendo executados, para a visualização dos dados armazenados basta acessar o link (http://localhost:8081/db/test/certs) será exibida uma lista com as validações feitas anteriormente.
+
+Os dados são inseridos no banco apenas para relatórios manuais e a API não possui endpoints para seu consumo.
+
+## Sobre o projeto
+
 
 ## Installation
 

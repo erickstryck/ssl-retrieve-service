@@ -1,6 +1,6 @@
 import { AppService } from '../services/app.service';
 import { RequestDto } from '../dtos/app.request.dto';
-import { CertificateDto } from 'src/dtos/app.certificate.dto';
+import { CertificateDto } from '../dtos/app.certificate.dto';
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { JoiValidationPipe } from '../validations/joi.validation.pipe';
 import RequestValidateSchema from '../validations/schemas/app.request.schema';

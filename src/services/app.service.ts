@@ -15,7 +15,7 @@ export class AppService {
     let certificateDto: CertificateDto;
     const urlObj = new URL(requestDto.targetUrl);
     let options = {
-      hostname: urlObj.hostname,
+      hostname: urlObj.host,
       agent: new https.Agent({
         maxCachedSessions: 0
       }),

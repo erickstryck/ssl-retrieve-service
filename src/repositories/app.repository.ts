@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Cert, CertDocument } from '../models/cert.schema';
-import { CertificateDto } from 'src/dtos/app.certificate.dto';
+import { CertificateDto } from '../dtos/app.certificate.dto';
 
 @Injectable()
 export class CertRepository {

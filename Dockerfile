@@ -8,5 +8,6 @@ RUN yarn install
 EXPOSE 3000
 ADD . /app
 COPY . .
-# CMD ["yarn", "start"]
-CMD ["yarn", "run", "start:debug"]
+RUN yarn run prebuild
+RUN yarn run build
+CMD ["yarn", "run", "start"]
