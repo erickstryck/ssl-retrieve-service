@@ -8,7 +8,7 @@ import { CertificateDto } from 'src/dtos/app.certificate.dto';
 export class CertRepository {
   constructor(@InjectModel(Cert.name) private certModel: Model<CertDocument>) {}
 
-  async create(certificateDto: CertificateDto): Promise<Cert> {
+  public async create(certificateDto: CertificateDto): Promise<Cert> {
     const createdCat = new this.certModel(certificateDto);
     return createdCat.save();
   }

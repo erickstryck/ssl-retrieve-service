@@ -11,7 +11,7 @@ export class AppService {
 
   private certificate: TLSSocket;
 
-  async getCertificateInfo(requestDto: RequestDto): Promise<CertificateDto> {
+  public async getCertificateInfo(requestDto: RequestDto): Promise<CertificateDto> {
     let certificateDto: CertificateDto;
     const urlObj = new URL(requestDto.targetUrl);
     let options = {

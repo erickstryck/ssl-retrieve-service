@@ -11,7 +11,7 @@ export class AppController {
 
   @Post()
   @UsePipes(new JoiValidationPipe(RequestValidateSchema))
-  async processSsl(@Body() requestDto: RequestDto): Promise<CertificateDto> {
+  public async processSsl(@Body() requestDto: RequestDto): Promise<CertificateDto> {
     return await this.appService.getCertificateInfo(requestDto);
   }
 }
