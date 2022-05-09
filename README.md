@@ -1,6 +1,6 @@
 ## Description
 
-Este projeto foi desenvolvido para verificação dos certificados SSL de domínios. O serviço consiste em receber uma determinada URL e fazer a leitura do certificado de segurança e realizar uma validação, posteriormente os dados são armazenados em um banco de dados não relacional ([MongoDB](https://www.mongodb.com/docs/)).
+Este projeto foi desenvolvido para verificação dos certificados SSL de domínios. O serviço consiste em receber uma determinada URL, fazer a leitura do certificado de segurança e realizar uma validação, posteriormente os dados são armazenados em um banco de dados não relacional ([MongoDB](https://www.mongodb.com/docs/)).
 
 ## Let's start
 
@@ -13,7 +13,7 @@ Com o docker instalado você deve fazer o download do projeto ou fazer o clone d
 ```bash
 $ docker compose up
 ```
-Serão instaladas todas as dependências nos containers do [Docker](https://docs.docker.com/get-started/), ao final do processo podemos acessar os serviços pelos seguintes endpoints:
+Serão instaladas todas as dependências durante a construção dos containers, ao final do processo podemos acessar os serviços pelos seguintes endpoints:
 
 - http://localhost:3000/api/ (Swagger do serviço web)
 - http://localhost:8081/db/test/certs (MongoExpress para visualização dos dados por um painel web)
@@ -28,13 +28,32 @@ Com os containers sendo executados podemos usar a interface do [Swagger](https:/
 
 A interface web do swagger possue as informações necessárias para o uso do serviço.
 
-Caso queira poderá realizar a requisição em ferramentas como [Postman](https://learning.postman.com/docs/getting-started/introduction/).
+Caso queira, poderá realizar a requisição em ferramentas como [Postman](https://learning.postman.com/docs/getting-started/introduction/).
+
+## Utilizando o serviço localmente (sem o uso do Docker)
+
+Para que o serviço possa ser executado localmente deve-se instalar o NodeJs vesão LTS 16.15.0 ou superior, siga os passos neste [Link](https://nodejs.org/en/download/) para instalar o NodeJs.
+
+É recomendado a instalação do [Yarn](https://yarnpkg.com) para a execução do projeto.
+
+É necessário a instalação do [MongoDB](https://www.mongodb.com/docs/manual/installation/) para que possa haver a persistência dos dados. Após a instalação do mongo o mesmo deve ser configurado para o funcionamento com seguinte connection string `mongodb://guest:sample@mongo:27017/`.
+
+Com os passos anteriores concluídos podemos então executar a sequencia de comandos abaixo:
+
+```bash
+$ yarn global add @nestjs/cli
+$ yarn install
+$ yarn run test
+$ yarn run test:e2e
+$ yarn start
+```
+Após os comandos serem executados deve ser possível acessar o Swagger com sucesso no seguinte link http://localhost:3000/api/ e utilizar a serviço.
 
 ## Visualizando os dados
 
-Com os containers sendo executados, para a visualização dos dados armazenados basta acessar o link (http://localhost:8081/db/test/certs) será exibida uma lista com as validações feitas anteriormente.
+Com o container do MongoExpress executando, basta acessar o link (http://localhost:8081/db/test/certs) para a visualização dos dados armazenados, será exibida uma lista com as validações feitas anteriormente.
 
-Os dados são inseridos no banco apenas para relatórios manuais e a API não possui endpoints para seu consumo.
+Os dados são inseridos no banco apenas para histórico, a API não possui endpoints para seu consumo.
 
 ## Sobre o projeto
 
