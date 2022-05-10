@@ -1,44 +1,47 @@
 ## Description
 
-Este projeto foi desenvolvido para verificação dos certificados SSL de domínios. O serviço consiste em receber uma determinada URL, fazer a leitura do certificado de segurança e realizar uma validação, posteriormente os dados são armazenados em um banco de dados não relacional ([MongoDB](https://www.mongodb.com/docs/)).
+This project was developed to verify domain SSL certificates. The service consists of receiving a certain URL, reading the security certificate, and performing a validation, later the data is stored in a non-relational database ([MongoDB](https://www.mongodb.com/docs/)).
 
-## Let's start
+## Quick start
 
-O projeto executa a partir de um container docker, para que possa executar é necessário que o docker esteja instalado, para instalar o docker siga as instruções deste [link](https://docs.docker.com/get-docker/).
+The project runs from a docker container so it is necessary that docker is installed, to install docker follow the instructions in this [link](https://docs.docker.com/get-docker/).
 
-O projeto conta com três containers, o primeiro é o container do serviço web, o segundo se trata do container do [MongoDB](https://www.mongodb.com/docs/) e o terceiro do [MongoExpress](https://github.com/mongo-express/mongo-express).
+The project has three containers, the first is the web service container, the second is the [MongoDB](https://www.mongodb.com/docs/) container and the third is [MongoExpress](https://github.com/mongo-express/mongo-express).
 
-Com o docker instalado você deve fazer o download do projeto ou fazer o clone do repositório usando o [GIT](https://git-scm.com/doc), após o download ou o clone do projeto você poderá subir os containers executando o seguinte comando no diretório raiz:
+With docker installed, you must download the project or clone the repository using [GIT](https://git-scm.com/doc), after downloading or cloning the project you can create containers by running the following command in the project root directory:
 
 ```bash
 $ docker compose up
 ```
-Serão instaladas todas as dependências durante a construção dos containers, ao final do processo podemos acessar os serviços pelos seguintes endpoints:
+All dependencies will be installed during the construction of the containers, at the end of the process we can access the services through the following endpoints:
 
-- http://localhost:3000/api/ (Swagger do serviço web)
-- http://localhost:8081/db/test/certs (MongoExpress para visualização dos dados por um painel web)
+- http://localhost:3000/api/ (Web service swagger)
+- http://localhost:8081/db/test/certs (Mongo Express for Visualizing Data in a Web Dashboard)
 
-## Utilizando o serviço
+## Using the service
 
-Com os containers sendo executados podemos usar a interface do [Swagger](https://swagger.io/docs/) para realizar as validações dos domínios, os passos a seguir devem ser executados:
+With the containers running, we can use the [Swagger](https://swagger.io/docs/) interface to perform domain validations, perform the following steps:
 
-1. Acione o Botão (`Try it out`) para exibir a entrada da requisição
-2. Adicione uma URL ao corpo da requisição ex: (`"targetUrl": "https://sample.com"`)
-3. Acione o Botão (`Execute`) para obter a resposta
+1. Access Swagger (http://localhost:3000/api/)
+2. Press the (`Try it out`) button to display the input field
+3. Add a URL to the request body eg (`"targetUrl": "https://sample.com"`)
+4. Press the (`Execute`) button to get the validation response
 
-A interface web do swagger possue as informações necessárias para o uso do serviço.
+The Swagger web interface has the instructions needed to use the service, the interface has examples of the request and response schemes.
 
-Caso queira, poderá realizar a requisição em ferramentas como [Postman](https://learning.postman.com/docs/getting-started/introduction/).
+If you want, you can also make the request in tools like [Postman](https://learning.postman.com/docs/getting-started/introduction/).
 
-## Utilizando o serviço localmente (sem o uso do Docker)
+## Using the service locally (without using Docker)
 
-Para que o serviço possa ser executado localmente deve-se instalar o NodeJs vesão LTS 16.15.0 ou superior, siga os passos neste [Link](https://nodejs.org/en/download/) para instalar o NodeJs.
+To run the service locally, you must install NodeJs LTS version 16.15.0 or higher, follow the steps in this [Link](https://nodejs.org/en/download/) to install NodeJs.
 
-É recomendado a instalação do [Yarn](https://yarnpkg.com) para a execução do projeto.
+It is recommended to install [Yarn](https://yarnpkg.com) to run the project.
 
-É necessário a instalação do [MongoDB](https://www.mongodb.com/docs/manual/installation/) para que possa haver a persistência dos dados. Após a instalação do mongo o mesmo deve ser configurado para o funcionamento com seguinte connection string `mongodb://guest:sample@mongo:27017/`.
-
-Com os passos anteriores concluídos podemos então executar a sequencia de comandos abaixo:
+It is necessary to install [MongoDB](https://www.mongodb.com/docs/manual/installation/) to perform data persistence. After installing mongo, you must configure the connection string with the same user and password used in the project, configure as shown in the example:
+```
+mongodb://guest:sample@mongo:27017/
+```
+With the previous steps completed, we can execute the sequence of commands below:
 
 ```bash
 $ yarn global add @nestjs/cli
@@ -47,33 +50,31 @@ $ yarn run test
 $ yarn run test:e2e
 $ yarn start
 ```
-Após os comandos serem executados deve ser possível acessar o Swagger com sucesso no seguinte link http://localhost:3000/api/ e utilizar a serviço.
+After the commands are successfully executed, you can access Swagger at the following link http://localhost:3000/api/ and use the service.
 
-## Visualizando os dados
+## Viewing the data
 
-Com o container do MongoExpress executando, basta acessar o link (http://localhost:8081/db/test/certs) para a visualização dos dados armazenados, será exibida uma lista com as validações feitas anteriormente.
+With the MongoExpress container running, just access the link (http://localhost:8081/db/test/certs) to view the stored data, a list of previously performed validations will be displayed.
 
-Os dados são inseridos no banco apenas para histórico, a API não possui endpoints para seu consumo.
+The data entered in the database is for history only, the API does not have endpoints for its consumption.
+## Testing
 
-## Sobre o projeto
+To run the automated tests, you must access the web service container, the steps on how to access the container are described in the following document ([docker exec](https://docs.docker.com/engine/reference/commandline/exec/)).
 
-O projeto foi desenvolvido com o uso da Framework [NestJs](https://docs.nestjs.com/) utilizando JavaScript com a sintaxe [TypeScript](https://www.typescriptlang.org/docs/), a arquitetura segue os padrões estipulados pela Framework.
-
-## Testando
-
-Para que se possa executar os testes automatizados deve-se acessar o container do serviço web, o procedimento de como acessar o container estão descritos no seguinte documento ([docker exec](https://docs.docker.com/engine/reference/commandline/exec/)).
-
-Caso deseje realizar os testes manualmente execute os seguintes comandos dentro do container:
+To perform the tests manually, run the following commands inside the container:
 
 ```bash
 $ yarn run test
 $ yarn run test:cov
 $ yarn run test:e2e
 ```
-### Logs
+## Logs
 
-Para que se possa visualizar os logs da aplicação é necessário executar comandos do docker conforme a documentação [docker logs](https://docs.docker.com/engine/reference/commandline/logs/).
+To view the application logs it is necessary to execute some docker commands according to the [docker logs](https://docs.docker.com/engine/reference/commandline/logs/) documentation.
 
-## Notas
+## About the project
 
-Este projeto foi desenvolvido para ser apenas um testes de habilidade, o mesmo não deve ser utilizado em ambiente de produção.
+The project was developed using the [NestJs](https://docs.nestjs.com/) Framework using JavaScript with the [TypeScript](https://www.typescriptlang.org/docs/) syntax, the architecture follows the standards recommended by the Framework.
+## Notes
+
+This project was developed to be just a skill test, it should not be used in a production environment.
