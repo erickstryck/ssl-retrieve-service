@@ -16,7 +16,7 @@ $ docker compose up
 All dependencies will be installed during the construction of the containers, at the end of the process we can access the services through the following endpoints:
 
 - http://localhost:3000/api/ (Web service swagger)
-- http://localhost:8081/db/test/certs (Mongo Express for Visualizing Data in a Web Dashboard)
+- http://localhost:9000/db/test/certs (Mongo Express for Visualizing Data in a Web Dashboard)
 
 ## Using the service
 
@@ -54,7 +54,7 @@ After the commands are successfully executed, you can access Swagger at the foll
 
 ## Viewing the data
 
-With the MongoExpress container running, just access the link (http://localhost:8081/db/test/certs) to view the stored data, a list of previously performed validations will be displayed.
+With the MongoExpress container running, just access the link (http://localhost:9000/db/test/certs) to view the stored data, a list of previously performed validations will be displayed.
 
 The data entered in the database is for history only, the API does not have endpoints for its consumption.
 ## Testing
