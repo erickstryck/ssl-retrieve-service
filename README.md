@@ -31,7 +31,7 @@ The Swagger web interface has the instructions needed to use the service, the in
 
 If you want, you can also make the request in tools like [Postman](https://learning.postman.com/docs/getting-started/introduction/).
 
-## Using the service locally (without using Docker)
+## Using the service locally (without Docker)
 
 To run the service locally, you must install NodeJs LTS version 16.15.0 or higher, follow the steps in this [Link](https://nodejs.org/en/download/) to install NodeJs.
 
